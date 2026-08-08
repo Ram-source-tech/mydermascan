@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+.venv/
+.env
+.vscode/
+*.pyc
+*.pyo
+*.pyd
+static/uploads/
+results/
+*.log
+# Ignore the large model file — upload separately or use Git LFS
+models/skin_model.keras

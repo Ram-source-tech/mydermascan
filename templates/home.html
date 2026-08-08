@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - DermaGlow-AI{% endblock %}
+
+{% block content %}
+    <section class="content-card upload-card radiance-scan home-page">
+        <div class="hero">
+            <h1>Hi {{ user['name'] }}, ready to reveal your most radiant skin?</h1>
+            <p class="hero-copy">Upload a luminous selfie for instant professional-grade skin analysis and bespoke beauty rituals.</p>
+        </div>
+        <div class="profile-hero fade-in">
+            <div style="display:flex;align-items:center;gap:1rem;">
+                {% if user['profile_image'] %}
+                    <img class="avatar slide-up" src="{{ url_for('static', filename='uploads/' ~ user['profile_image']) }}" alt="Avatar" style="width:96px;height:96px;object-fit:cover;">
+                {% else %}
+                    <div class="avatar slide-up" style="width:96px;height:96px;background:linear-gradient(135deg,#f57fa6,#c3376b);display:flex;align-items:center;justify-content:center;border-radius:999px;color:white;font-weight:700;font-size:1.25rem;">{{ user['name'][0]|upper }}</div>
+                {% endif %}
+                <div>
+                    <h2 style="margin:0;">Hi {{ user['name'] }}</h2>
+                    <div style="color:#6b4760;margin-top:0.25rem;">{{ user['email'] }}{% if user['age'] %} · {{ user['age'] }} yrs{% endif %}</div>
+                </div>
+            </div>
+            {% if history and history|length > 0 %}
+                <div class="history-list" style="margin-top:1.25rem;">
+                    <p class="eyebrow">Your recent scans</p>
+                    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                        {% for item in history %}
+                            <article class="feature-card slide-up" style="width:180px;padding:0.5rem;">
+                                <div style="height:110px;overflow:hidden;border-radius:12px;">
+                                    <img src="{{ url_for('static', filename='uploads/' ~ item['image']) }}" alt="scan" style="width:100%;height:100%;object-fit:cover;">
+                                </div>
+                                <div style="margin-top:0.5rem;font-weight:700;color:#4a233a;">{{ item['disease'] }}</div>
+                                <div style="font-size:0.85rem;color:#725061;margin-top:0.25rem;">{{ item['created_at'] }}</div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="upload-panel">
+            <p class="eyebrow">Radiance scan</p>
+            <h2>Upload your glow snapshot</h2>
+            <p class="hero-copy">Share a clean, well-lit image and our beauty intelligence will reveal your skin concerns with salon-caliber care guidance.</p>
+            {% if error %}
+                <div class="form-error">{{ error }}</div>
+            {% endif %}
+            <form action="{{ url_for('predict') }}" method="POST" enctype="multipart/form-data" class="upload-form">
+                <label class="field-label" for="image">Face image</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+                <p class="field-help">Take the photo in a well-lit space, and avoid heavy makeup for best results.</p>
+                <button class="button" type="submit">Analyze Skin</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

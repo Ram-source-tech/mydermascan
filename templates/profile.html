@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - DermaGlow-AI{% endblock %}
+
+{% block content %}
+    <section class="content-card profile-card">
+        <p class="eyebrow">Your skin profile</p>
+        <h1>Refine your beauty profile</h1>
+        <p class="hero-copy">Keep your profile current so your recommendations remain personalized, luminous, and perfectly suited to your skin.</p>
+        {% if error %}
+            <div class="form-error">{{ error }}</div>
+        {% endif %}
+        <form method="post" class="upload-form" enctype="multipart/form-data">
+            <label class="field-label">Name</label>
+            <input type="text" name="name" value="{{ user['name'] }}" required>
+
+            <label class="field-label">Age (optional)</label>
+            <input type="text" name="age" value="{{ user['age'] if user['age'] is not none else '' }}">
+
+            <label class="field-label">Profile image</label>
+            {% if user['profile_image'] %}
+                <img class="avatar" src="{{ url_for('static', filename='uploads/' ~ user['profile_image']) }}" alt="Profile image" style="width:96px;height:96px;border-radius:999px;object-fit:cover;margin-bottom:0.5rem;">
+            {% endif %}
+            <input type="file" name="profile_image" accept="image/*">
+
+            <button class="button" type="submit">Save profile</button>
+        </form>
+    </section>
+{% endblock %}

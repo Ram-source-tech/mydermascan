@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DermaGlow-AI{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="{{ url_for('home') if current_user else url_for('login') }}">DermaGlow-AI</a>
+            <nav class="site-nav">
+                {% if current_user %}
+                    <a href="{{ url_for('home') }}">Home</a>
+                    <a href="{{ url_for('profile') }}">Profile</a>
+                    <a href="{{ url_for('about') }}">About</a>
+                    <a class="button button-secondary" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register') }}">Register</a>
+                    <a href="{{ url_for('about') }}">About</a>
+                {% endif %}
+            </nav>
+        </header>
+        <main class="page-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>

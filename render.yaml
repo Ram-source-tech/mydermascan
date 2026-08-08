@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: dermaglowai
+    env: docker
+    region: oregon
+    branch: main
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    plan: free
+    startCommand: "python app.py"

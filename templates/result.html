@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Analysis Result - DermaGlow-AI{% endblock %}
+
+{% block content %}
+    <section class="content-card result-card">
+        <span class="result-badge">Analysis complete</span>
+        <h1>Detected concern: {{ disease }}</h1>
+        <p class="hero-copy">Your uploaded image reveals the closest skin concern match. Use these curated care suggestions to elevate your beauty routine with confidence.</p>
+
+        <div class="result-grid">
+            <div class="result-preview">
+                <div class="image-frame">
+                    <img src="{{ image_url }}" alt="Uploaded skin image">
+                    <div class="detection-label">Detected: {{ disease }}</div>
+                </div>
+            </div>
+            <div class="remedy-panel">
+                <div class="remedy-card">
+                    <p class="eyebrow">Top 5 remedies</p>
+                    <h2>Refined skincare protocol</h2>
+                    <ul class="remedy-list">
+                        {% for tip in remedy %}
+                            <li>{{ tip }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-actions">
+            <a class="button button-secondary" href="{{ url_for('home') }}">Analyze another image</a>
+            <a class="button" href="{{ url_for('profile') }}">Update profile</a>
+        </div>
+    </section>
+{% endblock %}
